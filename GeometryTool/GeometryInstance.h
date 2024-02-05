@@ -23,7 +23,7 @@ protected:
 public:
 	
 	UFUNCTION(BlueprintCallable,Category="Geometry Instance Tool")
-	void AddCudeInstanceByCounts(
+	void AddInstanceByBuildCube(
 		FTransform OriginTransform,
 		FVector Counts3D = FVector(5,5,1),
 		FVector Distance3D = FVector(100.f,100.f,100.f),
@@ -35,17 +35,18 @@ public:
 		FVector Size_B = FVector(1,1,1),
 		bool bIsUseRandomSize = false);
 
-	UFUNCTION(BlueprintCallable,Category="Geometry Instance Range")
-	void AddCudeInstanceByRange(
+	UFUNCTION(BlueprintCallable,Category="Geometry Instance Tool")
+	void AddInstanceByShape(
 		UShapeComponent* Shape,
 		float Distance = 100.f,
 		float Noise= 0.f,
-		bool bIsUseWorldSpace = true,
+		bool bIsUseLookAtOrigin = false,
 		FRotator Rotator_A = FRotator(0,0,0),
 		FRotator Rotator_B = FRotator(0,0,0),
 		bool bIsUseRandomRotation = false,
 		FVector Size_A = FVector(1,1,1),
 		FVector Size_B = FVector(1,1,1),
-		bool bIsUseRandomSize = false
+		bool bIsUseRandomSize = false,
+		FRotator Rotator_Delta = FRotator(0,0,0)
 		);
 };

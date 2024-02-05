@@ -26,6 +26,11 @@ public class SomeTool : ModuleRules
 			new string[]
 			{
 				"Core",
+				"PhysicsCore",
+				"RenderCore",
+				"GeometryCore",
+				"GeometryFramework",
+				"DynamicMesh"
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
@@ -38,6 +43,7 @@ public class SomeTool : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
+				"GeometryScriptingCore"
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);
