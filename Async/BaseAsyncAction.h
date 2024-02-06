@@ -28,12 +28,18 @@ public:
 		);
 	
 	virtual void Activate() override;
+
+
+	UPROPERTY(BlueprintAssignable,DisplayName=OnStart)
+	FAsyncDelegate OnStartDelegate;
+
+	UPROPERTY(BlueprintAssignable,DisplayName=OnUpdate)
+	FAsyncDelegate OnUpdateDelegate;
 	
 	UPROPERTY(BlueprintAssignable,DisplayName=OnComplete)
 	FAsyncDelegate OnCompleteDelegate;
 	
-	UPROPERTY(BlueprintAssignable,DisplayName=OnUpdate)
-	FAsyncDelegate OnUpdateDelegate;
+	
 	
 	//UPROPERTY(BlueprintAssignable)
 	//FAsyncDelegateTwo OnUpdateDelegateTwo;

@@ -1,31 +1,31 @@
-#include "RotateWeapon.h"
+#include "RotateWeaponComponet.h"
 
 #include "K2Node_Timeline.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "SomeTool/Async/BaseAsyncAction.h"
 
-URotateWeapon::URotateWeapon()
+URotateWeaponComponet::URotateWeaponComponet()
 {
 	PrimaryComponentTick.bCanEverTick = false;
 }
-void URotateWeapon::BeginPlay()
+void URotateWeaponComponet::BeginPlay()
 {
 	Super::BeginPlay();
 }
 
-void URotateWeapon::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void URotateWeaponComponet::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
 
-void URotateWeapon::OnRotate_Implementation()
+void URotateWeaponComponet::OnRotate_Implementation()
 {
 	AddWorldRotation(FRotator(0,RotateSpeed,0));
 }
 
-void URotateWeapon::WeaponTrace_Implementation(
+void URotateWeaponComponet::WeaponTrace_Implementation(
 	float Length,
 	float Radius, 
 	ETraceTypeQuery TraceChannel, 
@@ -60,7 +60,7 @@ void URotateWeapon::WeaponTrace_Implementation(
 				DrawTime);
 			if (OutHits.Num() > 0 && GetOwner() != OutHits[0].GetComponent()->GetOwner())
 			{
-				URotateWeapon* Target = Cast<URotateWeapon>(OutHits[0].GetComponent());
+				URotateWeaponComponet* Target = Cast<URotateWeaponComponet>(OutHits[0].GetComponent());
 				if (Target)
 				{
 					BeHit(Target,i,OutHits[0].ImpactPoint,InstanceTransform.GetLocation());
@@ -75,16 +75,16 @@ void URotateWeapon::WeaponTrace_Implementation(
 	}
 }
 
-void URotateWeapon::StartRotate(float InRate,float rotateSpeed)
+void URotateWeaponComponet::StartRotate(float InRate,float rotateSpeed)
 {
-	if (GetOwner() && GetInstanceCount() > 0)
+	if (GetOwner() && Weapons.Num() > 0)
 	{
 		UWorld* World = GEngine->GetWorldFromContextObject(GetOwner(),EGetWorldErrorMode::ReturnNull);
 		if (World)
 		{
 			UE_LOG(LogTemp,Log,TEXT("RotateWeapon Start"));
 			RotateSpeed = rotateSpeed;
-			World->GetTimerManager().SetTimer(TimerHandle,this,&URotateWeapon::OnRotate,InRate,true,-1);
+			World->GetTimerManager().SetTimer(TimerHandle,this,&URotateWeaponComponet::OnRotate,InRate,true,-1);
 		}
 	}
 	else
@@ -93,7 +93,7 @@ void URotateWeapon::StartRotate(float InRate,float rotateSpeed)
 	}
 }
 
-void URotateWeapon::EndRotate()
+void URotateWeaponComponet::EndRotate()
 {
 	if (GetOwner())
 	{
@@ -110,16 +110,16 @@ void URotateWeapon::EndRotate()
 	}
 }
 
-void URotateWeapon::BeHit_Implementation(UActorComponent* Component,const int32& Index,const FVector& HitLocation,const FVector& InstanceLocation)
+void URotateWeaponComponet::BeHit_Implementation(UActorComponent* Component,const int32& Index,const FVector& HitLocation,const FVector& InstanceLocation)
 {
 	HitDelegate.Broadcast(Component,Index,HitLocation,InstanceLocation);
 }
 
-void URotateWeapon::AddRotateWeapon(int32 Count,float Radius,FVector Size,float YawDelta)
+void URotateWeaponComponet::AddRotateWeapon(AWeaponActor* WeaponActor,int32 Count,float Radius,FVector Size,float YawDelta)
 {
 	RotateRadius = FMath::Clamp(Radius,1.0f,10000.f);;
 	Count = FMath::Clamp(Count,0,99);
-	int32 LastCount = GetInstanceCount();
+	int32 LastCount = Weapons.Num();
 	int32 CurtCount = LastCount + Count;
 	for (int i = LastCount; i < CurtCount; i++)
 	{
@@ -135,7 +135,13 @@ void URotateWeapon::AddRotateWeapon(int32 Count,float Radius,FVector Size,float 
 		InstanceTransform.SetLocation(Location);
 		InstanceTransform.SetRotation(Rotator.Quaternion());
 		InstanceTransform.SetScale3D(Size);
-		AddInstance(InstanceTransform,true);
+		
+		UClass* WeaponClass = Cast<UClass>(WeaponsActor);
+		AWeaponActor* WeaponActor = GetWorld()->SpawnActor<AWeaponActor>(WeaponClass,Location,Rotator);
+		Weapons.Add(WeaponActor);
+		
+		//AddInstance(InstanceTransform,true);
+		//UpdateInstanceTransform(i,InstanceTransform,true,true);
 	}
 
 	for (int i = 0; i < CurtCount; i++)
@@ -145,29 +151,45 @@ void URotateWeapon::AddRotateWeapon(int32 Count,float Radius,FVector Size,float 
 		FVector CurtLocation;
 		if (i < LastCount)
 		{
-			LastAngle = (360.f/LastCount) * i;
-			CurtAngle = (360.f/CurtCount) * i;
+			LastAngle = (360.f/LastCount) * i * -1;
+			CurtAngle = (360.f/CurtCount) * i * -1;
 		}
 		else
 		{
-			LastAngle = (360.f/CurtCount) * LastCount;
-			CurtAngle = (360.f/CurtCount) * i;
+			if (LastCount == 0)
+			{
+				LastAngle = 0.f;
+				CurtAngle = (360.f/CurtCount) * i * -1;
+			}
+			else
+			{
+				LastAngle = (360.f/LastCount) * LastCount * -1;
+				CurtAngle = (360.f/CurtCount) * i * -1;
+			}
 		}
 		CurtLocation = FVector(GetComponentLocation().X + UKismetMathLibrary::DegCos(CurtAngle)*Radius,GetComponentLocation().Y + UKismetMathLibrary::DegSin(CurtAngle)*Radius,GetComponentLocation().Z);
 		RotateDelegate.Broadcast(i,CurtLocation,LastAngle,CurtAngle);
 	}
 }
 
-void URotateWeapon::ReduceWeapon(int32 Index)
+void URotateWeaponComponet::ReduceWeapon(int32 Index)
 {
-	RemoveInstance(Index);
-	if (GetInstanceCount() <= 0)
+	if (Weapons.Num() <= 0)
 	{
 		EndRotate();
 	}
+	else
+	{
+		if (Index >= 0 && Index < Weapons.Num())
+		{
+			FVector Location = Weapons[Index]->GetActorLocation();
+			Weapons.RemoveAt(Index);
+			EndDelegate.Broadcast(Index,Location,0,0);
+		}
+	}
 }
 
-void URotateWeapon::UpdateInstanceLocation(int32 Index,float Radius,float Angle,FVector Size,float YawDelta)
+FTransform URotateWeaponComponet::UpdateTransform(int32 Index,float Radius,float Angle,FVector Size,float YawDelta)
 {
 	FTransform NewInstanceTransform;
 	FVector NewLocation = FVector(GetComponentLocation().X + UKismetMathLibrary::DegCos(Angle)*Radius,GetComponentLocation().Y + UKismetMathLibrary::DegSin(Angle)*Radius,GetComponentLocation().Z);
@@ -177,8 +199,9 @@ void URotateWeapon::UpdateInstanceLocation(int32 Index,float Radius,float Angle,
 	NewInstanceTransform.SetLocation(NewLocation);
 	NewInstanceTransform.SetRotation(NewRotator.Quaternion());
 	NewInstanceTransform.SetScale3D(Size);
-	
-	UpdateInstanceTransform(Index,NewInstanceTransform,true,true);
+
+	return NewInstanceTransform;
+	//UpdateInstanceTransform(Index,NewInstanceTransform,true,true);
 }
 
 

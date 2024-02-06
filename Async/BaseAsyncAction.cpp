@@ -58,6 +58,7 @@ void UBaseAsyncAction::Activate()
 		{
 			UE_LOG(LogTemp,Warning,TEXT("AsyncAction Start---Time:%f"),Time);
 			World->GetTimerManager().SetTimer(TimerHandle,this,&UBaseAsyncAction::OnUpdate,DeltaSeconds,true,FirstDelay);
+			OnStartDelegate.Broadcast(Time,CurveValue,AValue,BValue);
 		}
 	}
 }
