@@ -19,7 +19,6 @@ void URotateWeaponComponet::TickComponent(float DeltaTime, ELevelTick TickType, 
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
-
 void URotateWeaponComponet::OnRotate_Implementation()
 {
 	AddWorldRotation(FRotator(0,RotateSpeed,0));
@@ -115,7 +114,7 @@ void URotateWeaponComponet::BeHit_Implementation(UActorComponent* Component,cons
 	HitDelegate.Broadcast(Component,Index,HitLocation,InstanceLocation);
 }
 
-void URotateWeaponComponet::AddRotateWeapon(AWeaponActor* WeaponActor,int32 Count,float Radius,FVector Size,float YawDelta)
+void URotateWeaponComponet::AddRotateWeapon(int32 Count,float Radius,FVector Size,float YawDelta)
 {
 	RotateRadius = FMath::Clamp(Radius,1.0f,10000.f);;
 	Count = FMath::Clamp(Count,0,99);

@@ -8,22 +8,43 @@
 
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
-class SOMETOOL_API UGeometryBuilder : public UDynamicMeshComponent
+class SOMETOOL_API AGeometryBuilder : public AActor
 {
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this component's properties
-	UGeometryBuilder();
-
+	AGeometryBuilder();
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category=GeometryBuilder)
+	bool bEnableComputeMeshPool = true;
 protected:
-	// Called when the game starts
+	
 	virtual void BeginPlay() override;
-
+	
+	UPROPERTY(Transient)
+	TObjectPtr<UDynamicMeshPool> DynamicMeshPool;
+	
 public:
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
-	                           FActorComponentTickFunction* ThisTickFunction) override;
+	
+	virtual void Tick(float DeltaSeconds) override;
+	
+	UFUNCTION(BlueprintCallable, Category = GeometryBuilder)
+	UDynamicMeshPool* GetComputeMeshPool();
+	
+	UFUNCTION(BlueprintCallable, Category = GeometryBuilder)
+	UDynamicMesh* AllocateComputeMesh();
+	
+	UFUNCTION(BlueprintCallable, Category = GeometryBuilder)
+	bool ReleaseComputeMesh(UDynamicMesh* Mesh);
+	
+	UFUNCTION(BlueprintCallable, Category = GeometryBuilder)
+	void ReleaseAllComputeMeshes();
+	
+	UFUNCTION(BlueprintCallable, Category = GeometryBuilder)
+	void FreeAllComputeMeshes();
+	
 	UFUNCTION(BlueprintCallable)
-	void BuildShapeFormStaticMesh();
+	UDynamicMesh* BuildShapeFormStaticMesh();
+	
+	UFUNCTION(BlueprintCallable)
+	bool ChangeShape();
 };

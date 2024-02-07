@@ -43,6 +43,7 @@ public class SomeTool : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
+				"GeometryFramework",
 				"GeometryScriptingCore"
 				// ... add private dependencies that you statically link with here ...	
 			}

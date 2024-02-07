@@ -48,7 +48,7 @@ public:
 	void BeHit(UActorComponent* Component,const int32& Index,const FVector& HitLocation = FVector(0,0,0),const FVector& InstanceLocation = FVector(0,0,0));
 	
 	UFUNCTION(BlueprintCallable)
-	void AddRotateWeapon(AWeaponActor* Weapon,int32 Count, float Radius,FVector Size = FVector(1,1,1),float YawDelta = 0);
+	void AddRotateWeapon(int32 Count, float Radius,FVector Size = FVector(1,1,1),float YawDelta = 0);
 
 	UFUNCTION(BlueprintCallable)
 	void ReduceWeapon(int32 Index);
