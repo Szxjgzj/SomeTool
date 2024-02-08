@@ -21,7 +21,6 @@ void UTestDynamicMeshComponent::BeginPlay()
 	Super::BeginPlay();
 
 	// ...
-	
 }
 
 
