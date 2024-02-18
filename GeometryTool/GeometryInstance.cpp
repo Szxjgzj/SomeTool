@@ -23,7 +23,7 @@ void UGeometryInstance::TickComponent(float DeltaTime, ELevelTick TickType,
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
-void UGeometryInstance::AddInstanceByBuildCube(
+void UGeometryInstance::GetPointsByCustomRect(
 	FTransform OriginTransform,
 	FVector Counts3D,
 	FVector Distance3D,
@@ -87,8 +87,9 @@ void UGeometryInstance::AddInstanceByBuildCube(
 	}
 }
 
-void UGeometryInstance::AddInstanceByShape(
+TArray<FTransform> UGeometryInstance::GetPointsByShape(
 	UShapeComponent* Shape,
+	bool bIsAddInstance,
 	float Distance,
 	float Noise,
 	bool bIsUseLookAtOrigin,
@@ -100,15 +101,14 @@ void UGeometryInstance::AddInstanceByShape(
 	bool bIsUseRandomSize,
 	FRotator Rotator_Delta)
 {
-
+	TArray<FTransform> FTransforms;
 	if (!Shape)
 	{
-		return;
+		return FTransforms;
 	}
 	Distance = FMath::Clamp(Distance,0.f,100000.f);
 	if (USphereComponent* Sphere = Cast<USphereComponent>(Shape))
 		{
-			
 			float Radius = Sphere->GetScaledSphereRadius();
 			FVector Origin = Sphere->GetComponentLocation();
 			float SphereRound = 2.f * Radius * 3.14159f;
@@ -160,15 +160,20 @@ void UGeometryInstance::AddInstanceByShape(
 					Rotator += Rotator_Delta;
 					InstanceTransform.SetRotation(Rotator.Quaternion());
 					InstanceTransform.SetScale3D(Size);
-					AddInstance(InstanceTransform,true);
+					
+					FTransforms.Add(InstanceTransform);
+					if (bIsAddInstance)
+					{
+						AddInstance(InstanceTransform,true);
+					}
 					
 					Lantitude += DeltaAnglePerRound;
 				}
 				Longitude += DeltaAnglePerRound;
 			}
-			return;
+			return FTransforms;
 		}
-		if (UBoxComponent* Box = Cast<UBoxComponent>(Shape))
+	if (UBoxComponent* Box = Cast<UBoxComponent>(Shape))
 		{
 			FVector Origin = Box->GetComponentLocation();
 			FVector BoxRange3D = 2 * FVector(Box->GetScaledBoxExtent().X,Box->GetScaledBoxExtent().Y,Box->GetScaledBoxExtent().Z);
@@ -206,16 +211,24 @@ void UGeometryInstance::AddInstanceByShape(
 						+ RandomDistanceDelta * RightVector
 						+ RandomDistanceDelta * UpVector;
 						
-						FRotator Rotator_C(0,0,0);
+						FRotator Rotator_A(0,0,0);
 						FVector Size(1,1,1);
-						
-						if (bIsUseRandomRotation)
+
+						if (bIsUseLookAtOrigin)
 						{
-							Rotator_C = FRotator(
-								FMath::RandRange(Rotator_A.Pitch,Rotator_B.Pitch),
-								FMath::RandRange(Rotator_A.Yaw,Rotator_B.Yaw),
-								FMath::RandRange(Rotator_A.Roll,Rotator_B.Roll));
+							if (bIsUseRandomRotation)
+							{
+								Rotator_A = FRotator(
+									FMath::RandRange(Rotator_A.Pitch,Rotator_B.Pitch),
+									FMath::RandRange(Rotator_A.Yaw,Rotator_B.Yaw),
+									FMath::RandRange(Rotator_A.Roll,Rotator_B.Roll));
+							}
+							else
+							{
+								Rotator_A = UKismetMathLibrary::FindLookAtRotation(Location,Origin);
+							}
 						}
+						
 						if (bIsUseRandomSize)
 						{
 							Size = FVector(
@@ -223,18 +236,25 @@ void UGeometryInstance::AddInstanceByShape(
 								FMath::RandRange(Size_A.Y,Size_B.Y),
 								FMath::RandRange(Size_A.Z,Size_B.Z));
 						}
-						
+
+						FRotator Rotator_B = FRotator(Rotator_A.Pitch + Rotator_Delta.Pitch,Rotator_A.Yaw + Rotator_Delta.Yaw,Rotator_A.Roll + Rotator_Delta.Roll);
 						InstanceTransform.SetLocation(Location);
-						InstanceTransform.SetRotation(Rotator_C.Quaternion());
+						InstanceTransform.SetRotation(Rotator_B.Quaternion());
 						InstanceTransform.SetScale3D(Size);
-						AddInstance(InstanceTransform,true);
+						
+						FTransforms.Add(InstanceTransform);
+						if (bIsAddInstance)
+						{
+							AddInstance(InstanceTransform,true);
+						}
 					}
 				}
 			}
-			return;
+			return FTransforms;
 		}
-		if (UCapsuleComponent* Capsule = Cast<UCapsuleComponent>(Shape))
+	if (UCapsuleComponent* Capsule = Cast<UCapsuleComponent>(Shape))
 		{
-			return;
+			return FTransforms;
 		}
+	return FTransforms;
 }

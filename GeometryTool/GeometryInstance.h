@@ -23,7 +23,7 @@ protected:
 public:
 	
 	UFUNCTION(BlueprintCallable,Category="Geometry Instance Tool")
-	void AddInstanceByBuildCube(
+	void GetPointsByCustomRect(
 		FTransform OriginTransform,
 		FVector Counts3D = FVector(5,5,1),
 		FVector Distance3D = FVector(100.f,100.f,100.f),
@@ -36,8 +36,9 @@ public:
 		bool bIsUseRandomSize = false);
 
 	UFUNCTION(BlueprintCallable,Category="Geometry Instance Tool")
-	void AddInstanceByShape(
+	TArray<FTransform> GetPointsByShape(
 		UShapeComponent* Shape,
+		bool bIsAddInstance = true,
 		float Distance = 100.f,
 		float Noise= 0.f,
 		bool bIsUseLookAtOrigin = false,

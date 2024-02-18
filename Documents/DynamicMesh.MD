@@ -31,9 +31,9 @@ UGeometryScriptLibrary_StaticMeshFunctions::CopyMeshFromStaticMesh()
 //附加一个Box/Sphere/Cylinder...到UDynmicMesh
 UGeometryScriptLibrary_MeshPrimitiveFunctions::AppendBox()
 //按网格体连接情况分割UDynmicMesh，新增的UDynmicMesh从动态网格体池分配
-UGeometryScriptLibrary_MeshDecompositionFunctions::SplitMeshByComponents
+UGeometryScriptLibrary_MeshDecompositionFunctions::SplitMeshByComponents()
 //为UDynmicMesh生成简单碰撞形状，用于物理查询
-UGeometryScriptLibrary_CollisionFunctions::SetDynamicMeshCollisionFromMesh
+UGeometryScriptLibrary_CollisionFunctions::SetDynamicMeshCollisionFromMesh()
 //对UDynmicMesh进行布尔运算，即建模中的挤出合并等操作
-UGeometryScriptLibrary_MeshBooleanFunctions::ApplyMeshBoolean
+UGeometryScriptLibrary_MeshBooleanFunctions::ApplyMeshBoolean()
 ```

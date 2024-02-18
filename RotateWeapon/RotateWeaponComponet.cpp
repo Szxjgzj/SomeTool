@@ -19,6 +19,16 @@ void URotateWeaponComponet::TickComponent(float DeltaTime, ELevelTick TickType, 
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
+void URotateWeaponComponet::InitCacheWeapons()
+{
+	/*for (int i = 0; i < 30; ++i)
+	{
+		UClass* WeaponClass = Cast<UClass>(WeaponsActor);
+		AWeaponActor* WeaponActor = GetWorld()->SpawnActor<AWeaponActor>(WeaponClass,FVector(0,0,-1000.f),FRotator(0,0,0));
+		CacheWeapons.Add(WeaponActor);
+	}*/
+}
+
 void URotateWeaponComponet::OnRotate_Implementation()
 {
 	AddWorldRotation(FRotator(0,RotateSpeed,0));
@@ -122,11 +132,10 @@ void URotateWeaponComponet::AddRotateWeapon(int32 Count,float Radius,FVector Siz
 	int32 CurtCount = LastCount + Count;
 	for (int i = LastCount; i < CurtCount; i++)
 	{
-		float Angle = 0;//(360.f/CurtCount) * i;
-		//UE_LOG(LogTemp,Warning,TEXT("Angle:%f"),Angle);
+		float Angle = 0;
 		
 		FTransform InstanceTransform;
-			
+		
 		FVector Location = FVector(GetComponentLocation().X + UKismetMathLibrary::DegCos(Angle)*Radius,GetComponentLocation().Y + UKismetMathLibrary::DegSin(Angle)*Radius,GetComponentLocation().Z);
 		FRotator Rotator = UKismetMathLibrary::FindLookAtRotation(GetComponentLocation(),Location);
 		Rotator.Yaw = Rotator.Yaw + YawDelta;
@@ -139,10 +148,7 @@ void URotateWeaponComponet::AddRotateWeapon(int32 Count,float Radius,FVector Siz
 		AWeaponActor* WeaponActor = GetWorld()->SpawnActor<AWeaponActor>(WeaponClass,Location,Rotator);
 		Weapons.Add(WeaponActor);
 		
-		//AddInstance(InstanceTransform,true);
-		//UpdateInstanceTransform(i,InstanceTransform,true,true);
 	}
-
 	for (int i = 0; i < CurtCount; i++)
 	{
 		float LastAngle;
@@ -200,7 +206,6 @@ FTransform URotateWeaponComponet::UpdateTransform(int32 Index,float Radius,float
 	NewInstanceTransform.SetScale3D(Size);
 
 	return NewInstanceTransform;
-	//UpdateInstanceTransform(Index,NewInstanceTransform,true,true);
 }
 
 

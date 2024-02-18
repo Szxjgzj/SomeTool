@@ -3,6 +3,7 @@
 AWeaponActor::AWeaponActor()
 {
 	PrimaryActorTick.bCanEverTick = false;
+	Slience();
 }
 
 void AWeaponActor::BeginPlay()
@@ -14,5 +15,15 @@ void AWeaponActor::BeginPlay()
 void AWeaponActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
+
+void AWeaponActor::Slience()
+{
+	
+}
+
+void AWeaponActor::Active()
+{
+	
 }
 

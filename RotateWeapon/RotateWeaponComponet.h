@@ -23,6 +23,9 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
 	                           FActorComponentTickFunction* ThisTickFunction) override;
 
+	UFUNCTION(BlueprintCallable)
+	void InitCacheWeapons();
+		
 	UFUNCTION(BlueprintCallable,BlueprintNativeEvent)
 	void OnRotate();
 	
@@ -66,8 +69,13 @@ public:
 	FOnRotateDelegate EndDelegate;
 
 public:
+	
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	TArray<AWeaponActor*> Weapons;
+
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	TArray<AWeaponActor*> CacheWeapons;
+	
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	TSubclassOf<AWeaponActor> WeaponsActor;
 
