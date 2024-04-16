@@ -26,5 +26,19 @@ public:
 	                           FActorComponentTickFunction* ThisTickFunction) override;
 
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
-	TArray<TSubclassOf<UActionTask>> Tasks;
+	TArray<TSubclassOf<UActionTask>> TasksClass;
+
+	UPROPERTY(BlueprintReadOnly)
+	TArray<UActionTask*> Tasks;
+	
+	UPROPERTY(EditDefaultsOnly)
+	bool bIsAuto = false;
+	
+	int32 CuetIndex = 0;
+
+	UFUNCTION(BlueprintCallable)
+	void ExcuteTask(int32 Index = 0);
+
+	UFUNCTION(BlueprintCallable)
+	UActionTask* GetCurtTask() const;
 };

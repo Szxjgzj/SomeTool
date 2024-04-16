@@ -19,22 +19,22 @@ void UActionComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (!Tasks.IsEmpty())
+	if (!TasksClass.IsEmpty())
 	{
-		for (auto task : Tasks)
+		for (auto taskclas : TasksClass)
 		{
-			UActionTask* newtask = NewObject<UActionTask>(this,task);
+			UActionTask* newtask = NewObject<UActionTask>(GetOuter(),taskclas);
 			if (newtask)
 			{
 				newtask->ActionComponent = this;
-				newtask->StartTask();
+				Tasks.Add(newtask);
+				newtask->BeginPlay();
+				UE_LOG(LogTemp,Warning,TEXT("Task Is Spawn"));
 			}
-			//task = UActionTask::StaticClass();
 		}
 	}
 	
 }
-
 
 // Called every frame
 void UActionComponent::TickComponent(float DeltaTime, ELevelTick TickType,
@@ -43,5 +43,32 @@ void UActionComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
+}
+
+void UActionComponent::ExcuteTask(int32 Index)
+{
+	if (!Tasks.IsEmpty())
+	{
+		CuetIndex = Index;
+		if (Index >= Tasks.Num())
+		{
+			CuetIndex = 0;
+		}
+		//UE_LOG(LogTemp,Warning,TEXT("Do Next Task"));
+		Tasks[CuetIndex]->StartTask();
+	}
+	return;
+}
+
+UActionTask* UActionComponent::GetCurtTask() const
+{
+	if (!Tasks.IsEmpty())
+	{
+		if (Tasks[CuetIndex])
+		{
+			return Tasks[CuetIndex];
+		}
+	}
+	return nullptr;
 }
 

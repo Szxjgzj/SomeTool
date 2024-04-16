@@ -8,12 +8,12 @@
 #include "ActionTask.generated.h"
 
 class UActionComponent;
-//DECLARE_EVENT_OneParam(F)
-/**
- * 
- */
+
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTickEventDelegate);
+//DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTickEvent)
 UCLASS(Blueprintable,BlueprintType)
-class SOMETOOL_API UActionTask : public UObject
+class SOMETOOL_API UActionTask : public UObject,public FTickableGameObject
 {
 	GENERATED_BODY()
 
@@ -25,17 +25,42 @@ public:
 	
 private:
 	bool IsInstantiated() const;
-	UWorld* GetWorld() const override;
+	virtual UWorld* GetWorld() const override;
+	virtual bool ImplementsGetWorld() const;
 public:
-	UFUNCTION(BlueprintImplementableEvent,BlueprintCallable)
+	
 	void StartTask();
-
 	UFUNCTION(BlueprintImplementableEvent,BlueprintCallable)
+	void OnTaskStart();
+
+	UFUNCTION(BlueprintCallable)
 	void EndTask();
+	UFUNCTION(BlueprintImplementableEvent,BlueprintCallable)
+	void OnTaskEnd();
 	
 	UFUNCTION(BlueprintCallable,BlueprintPure)
 	UActionComponent* GetActionComponent();
+
+	UFUNCTION(BlueprintCallable,BlueprintPure)
+	AActor* GetOwner();
+
+	UPROPERTY(BlueprintAssignable)
+	FTickEventDelegate OnTickEventDelegate;
+
+	bool bIsEnd = true;
 	
+	////////
+	
+	virtual void PostInitProperties() override;
+
+	UFUNCTION(BlueprintNativeEvent)
+	void BeginPlay();
+	
+	//UFUNCTION(BlueprintNativeEvent)
+	void Tick(float DeltaTime) override;
+	
+	virtual TStatId GetStatId() const override;
+	virtual bool IsTickable() const override;
 private:
 	FTimerHandle TimerHandle;
 	TObjectPtr<UActionComponent> ActionComponent;
