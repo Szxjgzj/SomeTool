@@ -1,0 +1,25 @@
+{
+	"RemapUnityFiles": 
+	{
+		"Module.SomeTool.cpp.obj": [
+			"ActionComponent.cpp.obj",
+			"ActionTask.cpp.obj",
+			"BaseAsyncAction.cpp.obj",
+			"FunctionLibrary.cpp.obj",
+			"GeometryInstance.cpp.obj",
+			"SomeTool.cpp.obj",
+			"RotateWeaponComponet.cpp.obj",
+			"WeaponActor.cpp.obj"
+		],
+		"Module.SomeTool.gen.cpp.obj": [
+			"ActionComponent.gen.cpp.obj",
+			"ActionTask.gen.cpp.obj",
+			"BaseAsyncAction.gen.cpp.obj",
+			"FunctionLibrary.gen.cpp.obj",
+			"GeometryInstance.gen.cpp.obj",
+			"RotateWeaponComponet.gen.cpp.obj",
+			"SomeTool.init.gen.cpp.obj",
+			"WeaponActor.gen.cpp.obj"
+		]
+	}
+}

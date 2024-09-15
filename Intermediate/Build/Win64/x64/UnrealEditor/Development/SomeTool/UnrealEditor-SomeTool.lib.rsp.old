@@ -1,0 +1,12 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-SomeTool.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"F:\UE Work\P_53_a\Intermediate\Build\Win64\x64\P_53_aEditor\Development\Engine\SharedPCH.Engine.Cpp20.InclOrderUnreal5_0.h.obj"
+"F:\UE Work\P_53_a\Plugins\SpineTemp\SomeTool\Intermediate\Build\Win64\x64\UnrealEditor\Development\SomeTool\Module.SomeTool.cpp.obj"
+"F:\UE Work\P_53_a\Plugins\SpineTemp\SomeTool\Intermediate\Build\Win64\x64\UnrealEditor\Development\SomeTool\Default.rc2.res"
+/OUT:"F:\UE Work\P_53_a\Plugins\SpineTemp\SomeTool\Intermediate\Build\Win64\x64\UnrealEditor\Development\SomeTool\UnrealEditor-SomeTool.lib"

@@ -1,0 +1,13 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UE4Editor-SomeTool-0005.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"E:\UE Work\P_427\Intermediate\Build\Win64\P_427Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.obj"
+"E:\UE Work\P_427\Plugins\SomeTool\Intermediate\Build\Win64\UE4Editor\Development\SomeTool\Module.SomeTool.cpp.obj"
+"E:\UE Work\P_427\Plugins\SomeTool\Intermediate\Build\Win64\UE4Editor\Development\SomeTool\Module.SomeTool.gen.cpp.obj"
+"E:\UE Work\P_427\Plugins\SomeTool\Intermediate\Build\Win64\UE4Editor\Development\SomeTool\Default.rc2.res"
+/OUT:"E:\UE Work\P_427\Plugins\SomeTool\Intermediate\Build\Win64\UE4Editor\Development\SomeTool\UE4Editor-SomeTool-0005.lib"
