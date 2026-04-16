@@ -1,0 +1,14 @@
+Binaries/
+Intermediate/
+
+.vs/
+.vscode/
+.idea/
+
+*.suo
+*.opensdf
+*.sdf
+*.VC.db
+*.VC.opendb
+
+Saved/
