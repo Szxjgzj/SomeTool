@@ -23,6 +23,11 @@
 			"Name": "SomeToolLevelLayout",
 			"Type": "Runtime",
 			"LoadingPhase": "Default"
+		},
+		{
+			"Name": "SomeToolAsyncTask",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
 		}
 	]
 }

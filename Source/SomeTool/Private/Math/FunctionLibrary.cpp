@@ -1,5 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-#include "FunctionLibrary.h"
+#include "Math/FunctionLibrary.h"
 
 #include "Components/BoxComponent.h"
 #include "Components/SphereComponent.h"

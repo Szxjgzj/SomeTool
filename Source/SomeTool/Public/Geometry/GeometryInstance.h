@@ -4,8 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "Components/InstancedStaticMeshComponent.h"
-#include "Components/SphereComponent.h"
 #include "GeometryInstance.generated.h"
+
+class UShapeComponent;
 
 /**
  * 

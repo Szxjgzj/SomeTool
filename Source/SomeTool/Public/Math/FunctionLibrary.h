@@ -5,6 +5,8 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FunctionLibrary.generated.h"
 
+class UShapeComponent;
+
 /**
  * 
  */
