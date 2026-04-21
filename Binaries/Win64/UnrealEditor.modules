@@ -1,0 +1,9 @@
+{
+	"BuildId": "844344ab-5d72-46f1-8daf-caba8952b598",
+	"Modules": 
+	{
+		"SomeTool": "UnrealEditor-SomeTool.dll",
+		"SomeToolAsyncTask": "UnrealEditor-SomeToolAsyncTask.dll",
+		"SomeToolLevelLayout": "UnrealEditor-SomeToolLevelLayout.dll"
+	}
+}
