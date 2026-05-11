@@ -29,25 +29,25 @@ public:
 	virtual void OnConstruction(const FTransform& Transform) override;
 	virtual void PostInitializeComponents() override;
 
-	UFUNCTION(CallInEditor, BlueprintCallable, Category="Default", meta=(DisplayName="重建布局"))
+	UFUNCTION(CallInEditor, BlueprintCallable, Category="SomeTool|LevelLayout", meta=(DisplayName="重建布局"))
 	void RebuildLayout();
 
-	UFUNCTION(CallInEditor, BlueprintCallable, Category="Default", meta=(DisplayName="清空房间"))
+	UFUNCTION(CallInEditor, BlueprintCallable, Category="SomeTool|LevelLayout", meta=(DisplayName="清空房间"))
 	void ClearRooms();
 
-	UFUNCTION(BlueprintPure, Category="Runtime", meta=(DisplayName="获取地面实例数据"))
+	UFUNCTION(BlueprintPure, Category="SomeTool|LevelLayout|Runtime", meta=(DisplayName="获取地面实例数据"))
 	TArray<FSomeToolFloorInstanceInfo> GetInstanceInfos_Floor() const;
 
-	UFUNCTION(BlueprintPure, Category="Runtime", meta=(DisplayName="获取基础墙体实例数据"))
+	UFUNCTION(BlueprintPure, Category="SomeTool|LevelLayout|Runtime", meta=(DisplayName="获取基础墙体实例数据"))
 	TArray<FSomeToolWallInstanceInfo> GetInstanceInfos_BaseWall() const;
 
-	UFUNCTION(BlueprintPure, Category="Runtime", meta=(DisplayName="获取最终墙体实例数据"))
+	UFUNCTION(BlueprintPure, Category="SomeTool|LevelLayout|Runtime", meta=(DisplayName="获取最终墙体实例数据"))
 	TArray<FSomeToolWallInstanceInfo> GetInstanceInfos_Wall() const;
 
-	UFUNCTION(BlueprintPure, Category="Runtime", meta=(DisplayName="获取开口实例数据"))
+	UFUNCTION(BlueprintPure, Category="SomeTool|LevelLayout|Runtime", meta=(DisplayName="获取开口实例数据"))
 	TArray<FSomeToolOpeningInstanceInfo> GetInstanceInfos_Opening() const;
 
-	UFUNCTION(BlueprintPure, Category="Runtime", meta=(DisplayName="获取拐角实例数据"))
+	UFUNCTION(BlueprintPure, Category="SomeTool|LevelLayout|Runtime", meta=(DisplayName="获取拐角实例数据"))
 	TArray<FSomeToolCornerInstanceInfo> GetInstanceInfos_Corner() const;
 
 	const TArray<FSomeToolFloorInstanceInfo>& GetFloorInstanceInfos() const { return GeneratedFloorInstanceInfos; }
@@ -59,112 +59,112 @@ public:
 	bool SnapRoomToolActorToGrid(ASomeToolLevelLayoutRoomToolActor& RoomToolActor) const;
 	bool SnapDoorToolActorToGrid(ASomeToolLevelLayoutDoorToolActor& DoorToolActor) const;
 
-	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="Default", meta=(DisplayName="根组件"))
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="SomeTool|LevelLayout", meta=(DisplayName="根组件"))
 	TObjectPtr<USceneComponent> SceneRoot;
 
-	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="Default", meta=(DisplayName="总网格预览组件"))
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="SomeTool|LevelLayout", meta=(DisplayName="总网格预览组件"))
 	TObjectPtr<UStaticMeshComponent> GridPreviewComponent;
 
-	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="Default", meta=(DisplayName="房间地面预览组件"))
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="SomeTool|LevelLayout", meta=(DisplayName="房间地面预览组件"))
 	TObjectPtr<UInstancedStaticMeshComponent> FloorPreviewComponent;
 
-	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="Default", meta=(DisplayName="墙体预览组件"))
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="SomeTool|LevelLayout", meta=(DisplayName="墙体预览组件"))
 	TObjectPtr<UInstancedStaticMeshComponent> WallPreviewComponent;
 
-	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="Default", meta=(DisplayName="拐角预览组件"))
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="SomeTool|LevelLayout", meta=(DisplayName="拐角预览组件"))
 	TObjectPtr<UInstancedStaticMeshComponent> CornerPreviewComponent;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Default", meta=(ClampMin="1", DisplayName="网格宽度"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SomeTool|LevelLayout", meta=(ClampMin="1", DisplayName="网格宽度"))
 	int32 GridWidth = 16;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Default", meta=(ClampMin="1", DisplayName="网格高度"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SomeTool|LevelLayout", meta=(ClampMin="1", DisplayName="网格高度"))
 	int32 GridHeight = 16;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Default", meta=(ClampMin="1.0", DisplayName="单元尺寸"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SomeTool|LevelLayout", meta=(ClampMin="1.0", DisplayName="单元尺寸"))
 	float CellSize = 200.0f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Default", meta=(DisplayName="网格以Actor为中心"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SomeTool|LevelLayout", meta=(DisplayName="网格以Actor为中心"))
 	bool bCenterGridOnActor = true;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Default", meta=(DisplayName="自动重建"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SomeTool|LevelLayout", meta=(DisplayName="自动重建"))
 	bool bAutoRebuild = true;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Default", meta=(DisplayName="运行时保留预览模型", ToolTip="开启后，运行时会继续显示当前LayoutActor的预览网格；关闭后，运行时只保留数据，不显示这些预览模型。"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SomeTool|LevelLayout", meta=(DisplayName="运行时保留预览模型", ToolTip="开启后，运行时会继续显示当前LayoutActor的预览网格；关闭后，运行时只保留数据，不显示这些预览模型。"))
 	bool bKeepPreviewVisibleInGame = false;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Default", meta=(DisplayName="使用房间工具Actor"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SomeTool|LevelLayout", meta=(DisplayName="使用房间工具Actor"))
 	bool bUseRoomToolActors = true;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Default", meta=(DisplayName="使用门窗工具Actor"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SomeTool|LevelLayout", meta=(DisplayName="使用门窗工具Actor"))
 	bool bUseDoorToolActors = true;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Default", AdvancedDisplay, meta=(DisplayName="手动房间矩形", EditCondition="!bUseRoomToolActors", EditConditionHides, ToolTip="关闭“使用房间工具Actor”后，可直接在这里手动填写房间矩形数据。"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SomeTool|LevelLayout", AdvancedDisplay, meta=(DisplayName="手动房间矩形", EditCondition="!bUseRoomToolActors", EditConditionHides, ToolTip="关闭“使用房间工具Actor”后，可直接在这里手动填写房间矩形数据。"))
 	TArray<FSomeToolRoomRect> RoomRects;
 
-	UPROPERTY(Transient, BlueprintReadOnly, Category="Debug", AdvancedDisplay, meta=(DisplayName="缓存布局结果"))
+	UPROPERTY(Transient, BlueprintReadOnly, Category="SomeTool|LevelLayout|Debug", AdvancedDisplay, meta=(DisplayName="缓存布局结果"))
 	FSomeToolLayoutBuildResult CachedLayout;
 
-	UPROPERTY(Transient, BlueprintReadOnly, Category="Debug", AdvancedDisplay, meta=(DisplayName="收集到的房间工具Actor"))
+	UPROPERTY(Transient, BlueprintReadOnly, Category="SomeTool|LevelLayout|Debug", AdvancedDisplay, meta=(DisplayName="收集到的房间工具Actor"))
 	TArray<TObjectPtr<ASomeToolLevelLayoutRoomToolActor>> CollectedRoomToolActors;
 
-	UPROPERTY(Transient, BlueprintReadOnly, Category="Debug", AdvancedDisplay, meta=(DisplayName="收集到的门窗工具Actor"))
+	UPROPERTY(Transient, BlueprintReadOnly, Category="SomeTool|LevelLayout|Debug", AdvancedDisplay, meta=(DisplayName="收集到的门窗工具Actor"))
 	TArray<TObjectPtr<ASomeToolLevelLayoutDoorToolActor>> CollectedDoorToolActors;
 
-	UPROPERTY(Transient, BlueprintReadOnly, Category="Debug", AdvancedDisplay, meta=(DisplayName="解析后的房间矩形"))
+	UPROPERTY(Transient, BlueprintReadOnly, Category="SomeTool|LevelLayout|Debug", AdvancedDisplay, meta=(DisplayName="解析后的房间矩形"))
 	TArray<FSomeToolRoomRect> ResolvedRoomRects;
 
-	UPROPERTY(Transient, BlueprintReadOnly, Category="Debug", AdvancedDisplay, meta=(DisplayName="解析后的门窗开口"))
+	UPROPERTY(Transient, BlueprintReadOnly, Category="SomeTool|LevelLayout|Debug", AdvancedDisplay, meta=(DisplayName="解析后的门窗开口"))
 	TArray<FSomeToolWallOpening> ResolvedWallOpenings;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Default", meta=(DisplayName="总地面网格模型"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SomeTool|LevelLayout", meta=(DisplayName="总地面网格模型"))
 	TObjectPtr<UStaticMesh> GridMesh;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Default", meta=(DisplayName="房间地面模型"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SomeTool|LevelLayout", meta=(DisplayName="房间地面模型"))
 	TObjectPtr<UStaticMesh> FloorMesh;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Default", meta=(DisplayName="墙体模型"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SomeTool|LevelLayout", meta=(DisplayName="墙体模型"))
 	TObjectPtr<UStaticMesh> WallMesh;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Default", meta=(DisplayName="拐角模型"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SomeTool|LevelLayout", meta=(DisplayName="拐角模型"))
 	TObjectPtr<UStaticMesh> CornerMesh;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Default", meta=(ClampMin="1.0", DisplayName="总网格厚度"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SomeTool|LevelLayout", meta=(ClampMin="1.0", DisplayName="总网格厚度"))
 	float GridThickness = 10.0f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Default", AdvancedDisplay, meta=(DisplayName="总网格Z偏移"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SomeTool|LevelLayout", AdvancedDisplay, meta=(DisplayName="总网格Z偏移"))
 	float GridOffsetZ = -5.0f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Default", meta=(ClampMin="1.0", DisplayName="地面厚度"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SomeTool|LevelLayout", meta=(ClampMin="1.0", DisplayName="地面厚度"))
 	float FloorThickness = 20.0f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Default", meta=(ClampMin="1.0", DisplayName="墙体厚度"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SomeTool|LevelLayout", meta=(ClampMin="1.0", DisplayName="墙体厚度"))
 	float WallThickness = 20.0f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Default", AdvancedDisplay, meta=(DisplayName="房间高度吸附"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SomeTool|LevelLayout", AdvancedDisplay, meta=(DisplayName="房间高度吸附"))
 	bool bSnapRoomToolHeightToStep = true;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Default", AdvancedDisplay, meta=(ClampMin="1.0", EditCondition="bSnapRoomToolHeightToStep", EditConditionHides, DisplayName="房间高度吸附步长"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SomeTool|LevelLayout", AdvancedDisplay, meta=(ClampMin="1.0", EditCondition="bSnapRoomToolHeightToStep", EditConditionHides, DisplayName="房间高度吸附步长"))
 	float RoomToolHeightSnapStep = 100.0f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Default", AdvancedDisplay, meta=(DisplayName="房间底部高度吸附"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SomeTool|LevelLayout", AdvancedDisplay, meta=(DisplayName="房间底部高度吸附"))
 	bool bSnapRoomToolBaseHeightToStep = false;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Default", AdvancedDisplay, meta=(ClampMin="1.0", EditCondition="bSnapRoomToolBaseHeightToStep", EditConditionHides, DisplayName="房间底部吸附步长"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SomeTool|LevelLayout", AdvancedDisplay, meta=(ClampMin="1.0", EditCondition="bSnapRoomToolBaseHeightToStep", EditConditionHides, DisplayName="房间底部吸附步长"))
 	float RoomToolBaseHeightSnapStep = 100.0f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Default", AdvancedDisplay, meta=(DisplayName="拖拽时延后重建"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SomeTool|LevelLayout", AdvancedDisplay, meta=(DisplayName="拖拽时延后重建"))
 	bool bDeferRoomToolRebuildWhileDragging = true;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Default", AdvancedDisplay, meta=(DisplayName="大量地面时合并预览"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SomeTool|LevelLayout", AdvancedDisplay, meta=(DisplayName="大量地面时合并预览"))
 	bool bUseMergedFloorPreviewWhenDense = true;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Default", AdvancedDisplay, meta=(ClampMin="1", DisplayName="合并预览阈值"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SomeTool|LevelLayout", AdvancedDisplay, meta=(ClampMin="1", DisplayName="合并预览阈值"))
 	int32 DenseFloorPreviewCellThreshold = 4096;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Default", AdvancedDisplay, meta=(DisplayName="启用异步布局构建"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SomeTool|LevelLayout", AdvancedDisplay, meta=(DisplayName="启用异步布局构建"))
 	bool bUseAsyncLayoutBuild = true;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Default", AdvancedDisplay, meta=(ClampMin="1", DisplayName="异步构建阈值"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SomeTool|LevelLayout", AdvancedDisplay, meta=(ClampMin="1", DisplayName="异步构建阈值"))
 	int32 AsyncBuildCellThreshold = 16384;
 
 protected:

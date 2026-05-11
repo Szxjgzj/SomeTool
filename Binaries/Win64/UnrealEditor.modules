@@ -4,6 +4,11 @@
 	{
 		"SomeTool": "UnrealEditor-SomeTool.dll",
 		"SomeToolAsyncTask": "UnrealEditor-SomeToolAsyncTask.dll",
-		"SomeToolLevelLayout": "UnrealEditor-SomeToolLevelLayout.dll"
+		"SomeToolLevelLayout": "UnrealEditor-SomeToolLevelLayout.dll",
+		"SomeToolMath": "UnrealEditor-SomeToolMath.dll",
+		"SomeToolObject": "UnrealEditor-SomeToolObject.dll",
+		"SomeToolPak": "UnrealEditor-SomeToolPak.dll",
+		"SomeToolPakEditor": "UnrealEditor-SomeToolPakEditor.dll",
+		"SomeToolRecording": "UnrealEditor-SomeToolRecording.dll"
 	}
 }

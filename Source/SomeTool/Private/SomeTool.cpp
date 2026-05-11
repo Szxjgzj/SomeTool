@@ -1,20 +1,13 @@
-﻿// Copyright Epic Games, Inc. All Rights Reserved.
-
 #include "SomeTool.h"
 
-#define LOCTEXT_NAMESPACE "FSomeToolModule"
+DEFINE_LOG_CATEGORY(LogSomeTool);
 
 void FSomeToolModule::StartupModule()
 {
-	// This code will execute after your module is loaded into memory; the exact timing is specified in the .uplugin file per-module
 }
 
 void FSomeToolModule::ShutdownModule()
 {
-	// This function may be called during shutdown to clean up your module.  For modules that support dynamic reloading,
-	// we call this function before unloading the module.
 }
 
-#undef LOCTEXT_NAMESPACE
-	
 IMPLEMENT_MODULE(FSomeToolModule, SomeTool)

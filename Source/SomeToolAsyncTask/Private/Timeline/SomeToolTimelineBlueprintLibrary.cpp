@@ -9,6 +9,7 @@
 
 USomeToolFloatCurveTimelineHandle* USomeToolTimelineBlueprintLibrary::CreateFloatCurveTimelineHandle(
 	UObject* WorldContextObject,
+	UObject* OwnerObject,
 	UCurveFloat* CurveAsset)
 {
 	UWorld* World = GEngine
@@ -29,7 +30,7 @@ USomeToolFloatCurveTimelineHandle* USomeToolTimelineBlueprintLibrary::CreateFloa
 	}
 
 	USomeToolFloatCurveTimelineHandle* Handle = NewObject<USomeToolFloatCurveTimelineHandle>(TimelineSubsystem);
-	Handle->InitializeHandle(TimelineSubsystem, CurveAsset);
+	Handle->InitializeHandle(TimelineSubsystem, OwnerObject, CurveAsset);
 
 	return Handle;
 }

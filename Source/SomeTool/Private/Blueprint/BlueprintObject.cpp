@@ -1,8 +1,5 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
-
 #include "Blueprint/BlueprintObject.h"
 
-#include "Engine/Engine.h"
 #include "Engine/Level.h"
 #include "Engine/World.h"
 
@@ -17,19 +14,9 @@ UWorld* UBlueprintObject::GetWorld() const
 		return CachedWorld.Get();
 	}
 
-	if (!HasAnyFlags(RF_ClassDefaultObject) && ensureMsgf(GetOuter(),
-		TEXT("Object: %s has a null OuterPrivate in UBlueprintObject::GetWorld()"), *GetFullName())
-		&& !GetOuter()->HasAnyFlags(RF_BeginDestroyed) && !GetOuter()->IsUnreachable())
+	if (const UObject* OuterObject = GetOuter())
 	{
-		if (UWorld* OuterWorld = GetOuter()->GetWorld())
-		{
-			return OuterWorld;
-		}
-
-		if (ULevel* Level = GetLevel())
-		{
-			return Level->OwningWorld;
-		}
+		return OuterObject->GetWorld();
 	}
 
 	return nullptr;
@@ -37,23 +24,15 @@ UWorld* UBlueprintObject::GetWorld() const
 
 void UBlueprintObject::SetWorldContextObject(UObject* WorldContextObject)
 {
-	if (!WorldContextObject)
-	{
-		CachedWorld.Reset();
-		return;
-	}
-
-	if (GEngine)
-	{
-		CachedWorld = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::ReturnNull);
-	}
-	else
-	{
-		CachedWorld = WorldContextObject->GetWorld();
-	}
+	CachedWorld = WorldContextObject ? WorldContextObject->GetWorld() : nullptr;
 }
 
-class ULevel* UBlueprintObject::GetLevel() const
+ULevel* UBlueprintObject::GetLevel() const
 {
-	return GetTypedOuter<ULevel>();
+	if (const UWorld* World = GetWorld())
+	{
+		return World->PersistentLevel;
+	}
+
+	return nullptr;
 }

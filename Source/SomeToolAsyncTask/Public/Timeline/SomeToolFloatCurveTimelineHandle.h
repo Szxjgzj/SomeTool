@@ -96,10 +96,12 @@ private:
 
 	void InitializeHandle(
 		USomeToolTimelineSubsystem* InOwningSubsystem,
+		UObject* InOwnerObject,
 		UCurveFloat* InCurveAsset);
 
 	void TickTimeline(float DeltaTime);
 	bool IsActiveForTick() const;
+	bool HasInvalidOwner() const;
 	void HandleOwningSubsystemDeinitialized();
 	void BeginPlayback();
 	void InternalFinish(bool bBroadcastUpdate);
@@ -114,6 +116,8 @@ private:
 	TObjectPtr<UCurveFloat> CurveAsset;
 
 	TWeakObjectPtr<USomeToolTimelineSubsystem> OwningSubsystem;
+	TWeakObjectPtr<UObject> OwnerObject;
+	bool bHasOwnerObject = false;
 
 	float DurationSeconds = 1.0f;
 	float CurrentTimeSeconds = 0.0f;

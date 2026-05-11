@@ -25,34 +25,34 @@ public:
 
 	virtual void OnConstruction(const FTransform& Transform) override;
 
-	UFUNCTION(CallInEditor, BlueprintCallable, Category="Default", meta=(DisplayName="通知布局Actor更新"))
+	UFUNCTION(CallInEditor, BlueprintCallable, Category="SomeTool|LevelLayout", meta=(DisplayName="通知布局Actor更新"))
 	void NotifyLayoutOwnerChanged();
 
-	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="Default", meta=(DisplayName="根组件"))
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="SomeTool|LevelLayout", meta=(DisplayName="根组件"))
 	TObjectPtr<USceneComponent> SceneRoot;
 
-	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="Default", meta=(DisplayName="门窗开口范围组件"))
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="SomeTool|LevelLayout", meta=(DisplayName="门窗开口范围组件"))
 	TObjectPtr<UBoxComponent> DoorBoundsComponent;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Default", meta=(DisplayName="所属布局Actor"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SomeTool|LevelLayout", meta=(DisplayName="所属布局Actor"))
 	TObjectPtr<ASomeToolLevelLayoutPreviewActor> LayoutOwner;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Default", meta=(DisplayName="开口模式"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SomeTool|LevelLayout", meta=(DisplayName="开口模式"))
 	ESomeToolOpeningMode OpeningMode = ESomeToolOpeningMode::Bounds;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Default", meta=(DisplayName="自动重建所属布局"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SomeTool|LevelLayout", meta=(DisplayName="自动重建所属布局"))
 	bool bAutoRebuildLayoutOwner = true;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Default", meta=(DisplayName="预览颜色"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SomeTool|LevelLayout", meta=(DisplayName="预览颜色"))
 	FLinearColor PreviewColor = FLinearColor(1.0f, 0.55f, 0.1f, 1.0f);
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Default", meta=(DisplayName="吸附到布局墙线"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SomeTool|LevelLayout", meta=(DisplayName="吸附到布局墙线"))
 	bool bSnapToLayoutGrid = true;
 
-	UFUNCTION(BlueprintPure, Category="Default")
+	UFUNCTION(BlueprintPure, Category="SomeTool|LevelLayout")
 	ASomeToolLevelLayoutPreviewActor* GetLayoutOwnerActor() const { return LayoutOwner; }
 
-	UFUNCTION(BlueprintPure, Category="Default")
+	UFUNCTION(BlueprintPure, Category="SomeTool|LevelLayout")
 	UBoxComponent* GetDoorBoundsComponent() const { return DoorBoundsComponent; }
 
 private:

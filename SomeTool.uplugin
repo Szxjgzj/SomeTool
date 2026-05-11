@@ -3,7 +3,7 @@
 	"Version": 1,
 	"VersionName": "1.0",
 	"FriendlyName": "SomeTool",
-	"Description": "Some Ttols for using",
+	"Description": "Personal runtime utility modules for math, layout, async task, pak, and recording helpers.",
 	"Category": "Other",
 	"CreatedBy": "LiuZhuoLing",
 	"CreatedByURL": "",
@@ -20,6 +20,11 @@
 			"LoadingPhase": "Default"
 		},
 		{
+			"Name": "SomeToolMath",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		},
+		{
 			"Name": "SomeToolLevelLayout",
 			"Type": "Runtime",
 			"LoadingPhase": "Default"
@@ -28,6 +33,29 @@
 			"Name": "SomeToolAsyncTask",
 			"Type": "Runtime",
 			"LoadingPhase": "Default"
+		},
+		{
+			"Name": "SomeToolObject",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		},
+		{
+			"Name": "SomeToolPak",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		},
+		{
+			"Name": "SomeToolPakEditor",
+			"Type": "Editor",
+			"LoadingPhase": "Default"
+		},
+		{
+			"Name": "SomeToolRecording",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"PlatformAllowList": [
+				"Win64"
+			]
 		}
 	]
 }

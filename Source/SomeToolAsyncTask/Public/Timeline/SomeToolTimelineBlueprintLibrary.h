@@ -19,8 +19,10 @@ public:
 		meta=(
 			WorldContext="WorldContextObject",
 			DefaultToSelf="WorldContextObject",
+			AdvancedDisplay="OwnerObject",
 			DisplayName="Create Float Curve Timeline Handle"))
 	static USomeToolFloatCurveTimelineHandle* CreateFloatCurveTimelineHandle(
 		UObject* WorldContextObject,
+		UObject* OwnerObject = nullptr,
 		UCurveFloat* CurveAsset = nullptr);
 };

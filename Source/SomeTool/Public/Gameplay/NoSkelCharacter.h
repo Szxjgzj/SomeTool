@@ -1,5 +1,3 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -7,10 +5,10 @@
 #include "NoSkelCharacter.generated.h"
 
 /**
- * ACharacter variant that skips the default skeletal mesh component.
- * Keeps capsule + character movement, but does not create the inherited Mesh component.
+ * ACharacter variant that keeps capsule and character movement, but skips the default skeletal mesh component.
+ * Intended as a lightweight Blueprint base when skeletal mesh behavior is not needed.
  */
-UCLASS(Blueprintable, BlueprintType)
+UCLASS(Blueprintable, BlueprintType, meta=(DisplayName="No Skel Character"))
 class SOMETOOL_API ANoSkelCharacter : public ACharacter
 {
 	GENERATED_BODY()

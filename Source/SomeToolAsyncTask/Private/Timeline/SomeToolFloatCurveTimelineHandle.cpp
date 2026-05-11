@@ -175,9 +175,12 @@ bool USomeToolFloatCurveTimelineHandle::IsLooping() const
 
 void USomeToolFloatCurveTimelineHandle::InitializeHandle(
 	USomeToolTimelineSubsystem* InOwningSubsystem,
+	UObject* InOwnerObject,
 	UCurveFloat* InCurveAsset)
 {
 	OwningSubsystem = InOwningSubsystem;
+	OwnerObject = InOwnerObject;
+	bHasOwnerObject = InOwnerObject != nullptr;
 	CurveAsset = InCurveAsset;
 	DurationSeconds = 1.0f;
 	CurrentTimeSeconds = 0.0f;
@@ -198,7 +201,7 @@ void USomeToolFloatCurveTimelineHandle::TickTimeline(float DeltaTime)
 		return;
 	}
 
-	if (!OwningSubsystem.IsValid() || !OwningSubsystem->IsInitialized())
+	if (!OwningSubsystem.IsValid() || !OwningSubsystem->IsInitialized() || HasInvalidOwner())
 	{
 		Stop();
 		return;
@@ -241,18 +244,25 @@ bool USomeToolFloatCurveTimelineHandle::IsActiveForTick() const
 	return bPlaying;
 }
 
+bool USomeToolFloatCurveTimelineHandle::HasInvalidOwner() const
+{
+	return bHasOwnerObject && !OwnerObject.IsValid();
+}
+
 void USomeToolFloatCurveTimelineHandle::HandleOwningSubsystemDeinitialized()
 {
 	bPlaying = false;
 	bPaused = false;
 	OwningSubsystem.Reset();
+	OwnerObject.Reset();
+	bHasOwnerObject = false;
 }
 
 void USomeToolFloatCurveTimelineHandle::BeginPlayback()
 {
-	if (!OwningSubsystem.IsValid() || !OwningSubsystem->IsInitialized())
+	if (!OwningSubsystem.IsValid() || !OwningSubsystem->IsInitialized() || HasInvalidOwner())
 	{
-		UE_LOG(LogSomeToolAsyncTask, Warning, TEXT("Play failed because the timeline subsystem is not valid."));
+		UE_LOG(LogSomeToolAsyncTask, Warning, TEXT("Play failed because the timeline subsystem is not valid or the owner object is invalid."));
 		return;
 	}
 

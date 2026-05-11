@@ -21,10 +21,9 @@ class SOMETOOL_API UBlueprintObject : public UObject
 
 public:
 	UBlueprintObject();
-
 	// 获取世界上下文（用于支持 Delay 等需要 World 的节点）
 	virtual UWorld* GetWorld() const override;
-
+	
 	UFUNCTION(BlueprintCallable, Category="SomeTool|Blueprint")
 	void SetWorldContextObject(UObject* WorldContextObject);
 
